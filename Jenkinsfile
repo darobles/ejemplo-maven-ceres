@@ -1,40 +1,58 @@
+import groovy.json.JsonSlurperClassic
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
+}
 pipeline {
     agent any
-
     stages {
-        stage('Hello') {
+        stage("Paso 1: Compliar"){
             steps {
-                echo 'Hello World'
+                script {
+                sh "echo 'Compile Code!'"
+                // Run Maven on a Unix agent.
+                sh "./mvnw clean compile -e"
+                }
             }
         }
-        stage('Step 1') {
+        stage("Paso 2: Testear"){
             steps {
-                echo 'Step 1'
-                sh "uname"
+                script {
+                sh "echo 'Test Code!'"
+                // Run Maven on a Unix agent.
+                sh "./mvnw clean test -e"
+                }
             }
         }
-        stage('Step 2') {
+        stage("Paso 3: Build .Jar"){
             steps {
-                echo 'Step 2'
-                sh "java --version"
-            }
-        }
-        stage('Step 3') {
-            steps {
-                echo 'Step 3'
-                sh "echo 'Hola'"
-            }
-        }
-        stage('Step 4') {
-            steps {
-                echo 'Step 4'
-                sh "pwd"
-            }
-        }
-        stage('Good Bye') {
-            steps {
-                echo 'Good Bye Usach Ceres'
+                script {
+                sh "echo 'Build .Jar!'"
+                // Run Maven on a Unix agent.
+                sh "./mvnw clean package -e"
+                }
             }
         }
     }
+    post {
+        always {
+            sh "echo 'fase always executed post'"
+        }
+        success {
+            sh "echo 'fase success'"
+        }
+        failure {
+            sh "echo 'fase failure'"
+        }
+    }
 }
+Contraer
+
+
+
+
+
+
+
+
+
+
