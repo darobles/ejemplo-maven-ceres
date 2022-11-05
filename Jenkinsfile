@@ -7,5 +7,5 @@ pipeline {
                 echo 'Hello World webhook'
             }
         }
-        
+     } 
 }
