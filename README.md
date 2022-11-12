@@ -1,6 +1,6 @@
 # Getting Started
 
-## Windows1
+## Windows
 
 ### Compile Code
 * ./mvnw.cmd clean compile -e
