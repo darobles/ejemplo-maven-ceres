@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sh "echo 'Calling sonar Service in another docker container!'"
                 // Run Maven on a Unix agent to execute Sonar.
-                sh './mvnw clean verify sonarqube:sonarqube'
+                sh './mvnw clean verify sonar:sonar'
             }
         }
     }
