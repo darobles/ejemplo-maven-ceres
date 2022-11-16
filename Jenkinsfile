@@ -1,40 +1,64 @@
+import groovy.json.JsonSlurperClassic
+
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
+}
 pipeline {
     agent any
-
     stages {
-        stage('Hello') {
+        stage("Paso 1: Compliar"){
             steps {
-                echo 'Hello World'
+                script {
+                sh "echo 'Compile Code!'"
+                // Run Maven on a Unix agent.
+                sh "mvn clean compile -e"
+                }
             }
         }
-        stage('Step 1') {
+        stage("Paso 2: Testear"){
             steps {
-                echo 'Step 1'
-                sh "uname"
+                script {
+                sh "echo 'Test Code!'"
+                // Run Maven on a Unix agent.
+                sh "mvn clean test -e"
+                }
             }
         }
-        stage('Step 2') {
+        stage("Paso 3: Build .Jar"){
             steps {
-                echo 'Step 2'
-                sh "java --version"
+                script {
+                sh "echo 'Build .Jar!'"
+                // Run Maven on a Unix agent.
+                sh "mvn clean package -e"
+                }
+            }
+            post {
+                //record the test results and archive the jar file.
+                success {
+                    archiveArtifacts artifacts:'build/*.jar'
+                }
             }
         }
-        stage('Step 3') {
+        stage("Paso 4: Análisis SonarQube"){
             steps {
-                echo 'Step 3'
-                sh "echo 'Hola'"
+                withSonarQubeEnv('sonarqube') {
+                    sh "echo 'Calling sonar Service in another docker container!'"
+                    // Run Maven on a Unix agent to execute Sonar.
+                    sh 'mvn clean verify sonar:sonar'
+                }
             }
         }
-        stage('Step 4') {
-            steps {
-                echo 'Step 4'
-                sh "pwd"
-            }
+    }
+    post {
+        always {
+            sh "echo 'fase always executed post'"
         }
-        stage('Good Bye') {
-            steps {
-                echo 'Good Bye Usach Ceres'
-            }
+        success {
+            sh "echo 'fase success'"
+        }
+
+        failure {
+            sh "echo 'fase failure'"
         }
     }
 }
