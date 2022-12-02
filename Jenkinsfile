@@ -51,7 +51,8 @@ pipeline {
             steps {
                 script{
                     sh "nohup bash ./mvnw spring-boot:run  & >/dev/null"
-                    sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                    sh "sleep 10 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                    sh "newman run /home/ejemplo-maven.postman_collection.json"
                 }
             }
         }
@@ -93,7 +94,7 @@ pipeline {
         stage("Paso 6: Descargar Nexus"){
             steps {
                 script{ //debería haber un token para el curl, no con password, esto funciona porque habilitamos el acceso anonimo a nexus
-                    sh ' curl -X GET -u admin:$NEXUS_PASSWORD "http://nexus:8081/repository/maven-usach-ceres/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar" -O'
+                    sh ' curl -X GET -u admin:$NEXUS_PASSWORD "http://nexus:8081/repository/maven-ceres-repository/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar" -O'
                 }
             }
         }
