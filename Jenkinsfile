@@ -7,7 +7,7 @@ pipeline {
     agent any
     environment {
         channel='D044YFG2N5U' //el id de mi canal personal de slack
-        NEXUS_PASSWORD     = credentials('llamado-nexus') //busca en la seccion credentials de jenkins user credential el que coincide con el nombre y guarda la pwd en la variable global
+        NEXUS_PASSWORD     = credentials('nexus') //busca en la seccion credentials de jenkins user credential el que coincide con el nombre y guarda la pwd en la variable global
     }
     stages {
         
