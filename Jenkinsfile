@@ -52,7 +52,7 @@ pipeline {
                 script{
                     sh "nohup bash ./mvnw spring-boot:run  & >/dev/null"
                     sh "sleep 10 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
-                    sh "newman run /home/ejemplo-maven.postman_collection.json"
+                    sh "newman run ejemplo-maven.postman_collection.json"
                 }
             }
         }
