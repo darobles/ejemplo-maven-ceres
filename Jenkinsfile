@@ -10,20 +10,7 @@ pipeline {
         NEXUS_PASSWORD     = credentials('nexus-password') //busca en la seccion credentials de jenkins user credential el que coincide con el nombre y guarda la pwd en la variable global
     }
     stages {
-        
-        stage("Paso 0: Download Code and checkout"){
-            steps {
-                script{
-                    checkout(
-                            [$class: 'GitSCM',
-                            //Acá reemplazar por el nonbre de branch
-                            branches: [[name: "feature-sonar" ]],
-                            //Acá reemplazar por su propio repositorio
-                            userRemoteConfigs: [[url: 'https://github.com/Fahren82/ejemplo-maven-1.git']]])
-                }
-            }
-        }
-     
+             
         stage("Paso 1: Build && Test"){
             steps {
                 script{
