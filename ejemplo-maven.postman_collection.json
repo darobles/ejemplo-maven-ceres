@@ -7,6 +7,31 @@
 	"item": [
 		{
 			"name": "test",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response).to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Mensaje == ok\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -40,11 +65,10 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"    pm.expect(pm.response).to.have.status(200);",
 							"});",
 							"pm.test(\"Mensaje == ok\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.mensaje).to.eql(\"ok\");",
+							"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -78,6 +102,31 @@
 		},
 		{
 			"name": "estadoPais2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response).to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Mensaje == ok\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -111,6 +160,22 @@
 		},
 		{
 			"name": "estadoMundial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response).to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Mensaje == ok\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
