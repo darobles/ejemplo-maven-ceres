@@ -67,7 +67,7 @@ pipeline {
                 }
             }
         }
-           stage("Paso 5: Subir Artefacto a Nexus"){
+           stage("Paso 5: Subir Artefacto a Nexus!"){
             steps {
                 script{
                     nexusPublisher nexusInstanceId: 'nexus',
