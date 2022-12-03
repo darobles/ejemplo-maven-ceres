@@ -68,7 +68,7 @@
 							"    pm.expect(pm.response).to.have.status(200);",
 							"});",
 							"pm.test(\"Mensaje == ok\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -120,7 +120,7 @@
 							"    pm.expect(pm.response).to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Mensaje == ok\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -169,7 +169,7 @@
 							"    pm.expect(pm.response).to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Mensaje == ok\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(8000);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(15000);\r",
 							"});"
 						],
 						"type": "text/javascript"
