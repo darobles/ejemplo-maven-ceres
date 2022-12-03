@@ -39,11 +39,17 @@ pipeline {
                 script{
                     sh "nohup bash ./mvnw spring-boot:run  & >/dev/null"
                     sh "sleep 10 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                }
+            }
+        }
+        stage("Paso 4: Test con newman"){
+            steps {
+                script{
                     sh "newman run ejemplo-maven.postman_collection.json"
                 }
             }
         }
-        stage("Paso 4: Detener Spring Boot"){
+        stage("Paso 5: Detener Spring Boot"){
             steps {
                 script{ //pidof lista los procesos java ejecutandose y awk indica cual es el nro del proceso el kill -9 mata el proceso java
                     sh ''' 
@@ -54,7 +60,7 @@ pipeline {
                 }
             }
         }
-           stage("Paso 5: Subir Artefacto a Nexus!"){
+           stage("Paso 6: Subir Artefacto a Nexus!"){
             steps {
                 script{
                     nexusPublisher nexusInstanceId: 'nexus',
@@ -78,28 +84,28 @@ pipeline {
                 }
             }
         }
-        stage("Paso 6: Descargar Nexus"){
+        stage("Paso 7: Descargar Nexus"){
             steps {
                 script{ //debería haber un token para el curl, no con password, esto funciona porque habilitamos el acceso anonimo a nexus
                     sh ' curl -X GET -u admin:admin "http://nexus:8081/repository/maven-ceres-repository/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar" -O'
                 }
             }
         }
-         stage("Paso 7: Levantar Artefacto Jar en server Jenkins"){
+         stage("Paso 8: Levantar Artefacto Jar en server Jenkins"){
             steps {
                 script{
                     sh 'nohup java -jar DevOpsUsach2020-0.0.1.jar & >/dev/null'
                 }
             }
         }
-          stage("Paso 8: Testear Artefacto - Dormir(Esperar 20sg) "){
+          stage("Paso 9: Testear Artefacto - Dormir(Esperar 20sg) "){
             steps {
                 script{
                     sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
                 }
             }
         }
-        stage("Paso 9:Detener Atefacto jar en Jenkins server"){
+        stage("Paso 10:Detener Atefacto jar en Jenkins server"){
             steps {
                 sh '''
                     echo 'Process Java .jar: ' $(pidof java | awk '{print $1}')  
